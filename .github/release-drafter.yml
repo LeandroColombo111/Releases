@@ -1,21 +1,18 @@
 name-template: 'Release v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
-  - title: 'Breaking Changes'
-    labels: 
-      - 'breaking changes'
-  - title: 'New Features'
+  - title: Breaking Changes
     labels:
-      - 'feat'
-  - title: 'Fixes'
+      - "breaking-changes"    
+  - title: New Features
     labels:
-      - 'fix'
-  - title: 'Updates'
+      - "feat"
+  - title: Fixes
     labels:
-      - 'chore'
-      - 'docs'
-      - 'refactor'
-      - 'test'
+      - "fix"
+  - title: Updates
+    labels:
+      - "*"
 change-template: '- $TITLE ([#$NUMBER]($URL))'
 template: |
   ## What's Changed
