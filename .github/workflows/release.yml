@@ -3,7 +3,7 @@ name: Generate Release Notes
 on:
   push:
     branches: main
-
+workflow_dispatch:
 
 
 jobs:
@@ -27,6 +27,9 @@ jobs:
       - name: Generate Release Notes
         run: |
           python release_notes/generate_release_notes.py
+      
+      - name: Pull changes from main
+        run: git pull origin main
 
       - name: Commit Changelog
         run: |
@@ -34,8 +37,12 @@ jobs:
           git config --global user.email 'actions@github.com'
           git add CHANGELOG.md
           git commit -m "chore(release): update changelog"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+          git push origin main
+          
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          body_path: "CHANGELOG.md"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
