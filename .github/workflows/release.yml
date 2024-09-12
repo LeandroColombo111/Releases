@@ -2,8 +2,7 @@ name: Generate Release Notes
 
 on:
   push:
-    branches:
-      - main
+    branches: [master, main]
 
 
 
