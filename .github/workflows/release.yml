@@ -58,10 +58,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Borrar la rama después de mergear el CHANGELOG.md
       - name: Delete branch
-        uses: peter-evans/delete-branch@v1.5.0
-        with:
-          branch: ${{ github.ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
         if: github.ref != 'refs/heads/main'
+        run: |
+          git push origin --delete $(echo ${{ github.ref }} | sed 's/refs\/heads\///')
