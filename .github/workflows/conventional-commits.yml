@@ -1,0 +1,19 @@
+name: Check Conventional Commits
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install commitlint
+        run: npm install --global @commitlint/cli @commitlint/config-conventional
+
+      - name: Lint commit messages
+        run: commitlint --from=$GITHUB_BASE_REF --to=$GITHUB_HEAD_REF
