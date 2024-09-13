@@ -4,24 +4,21 @@ from datetime import datetime
 
 repo = git.Repo(".")
 
-
-categories = { 
-    "breaking-changes": "Breaking changes", 
-    "feat": "New features", 
-    "fix": "bugfixes", 
-    "updates": "*" 
-
+categories = {
+    "breaking-changes": "Breaking changes",
+    "feat": "New features",
+    "fix": "Bugfixes",
+    "updates": "*"
 }
 
-
-commit_pattern = re.compile(r"\[DS-(\d+)\] - (feat|fix|chore): (.+)")
+commit_pattern = re.compile(r"\[DS-(\d+)\] - (breaking-changes|feat|fix|updates): (.+)")
 
 def get_merged_prs():
     """
     Devuelve una lista de commits que representan PRs mergeados, en formato [DS-###] - tipo: comentario.
     """
     merged_prs = []
-    for commit in repo.iter_commits('main', max_count=100):  
+    for commit in repo.iter_commits('main', max_count=100):  # Ajustar max_count según necesidad
         message = commit.message
         if "Merge pull request" in message or commit_pattern.match(message):
             merged_prs.append(commit)
@@ -57,6 +54,17 @@ def generate_changelog(categorized_commits):
 
     return changelog
 
+def update_changelog(new_changelog):
+    try:
+        with open("CHANGELOG.md", "r") as file:
+            current_changelog = file.read()
+    except FileNotFoundError:
+        current_changelog = ""
+
+    updated_changelog = new_changelog + "\n" + current_changelog
+    return updated_changelog
+
+
 def save_changelog(changelog):
     with open("CHANGELOG.md", "w") as file:
         file.write(changelog)
@@ -64,6 +72,7 @@ def save_changelog(changelog):
 if __name__ == "__main__":
     merged_prs = get_merged_prs()
     categorized_commits = categorize_commits(merged_prs)
-    changelog = generate_changelog(categorized_commits)
-    save_changelog(changelog)
-    print("Changelog generado y guardado en CHANGELOG.md")
+    new_changelog = generate_changelog(categorized_commits)
+    updated_changelog = update_changelog(new_changelog)
+    save_changelog(updated_changelog)
+    print("Changelog actualizado y guardado en CHANGELOG.md")
