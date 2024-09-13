@@ -31,23 +31,6 @@ jobs:
       - name: Pull changes from main
         run: git pull origin main
 
-      - name: Create Tag
-        id: tag_version
-        run: |
-          git tag $VERSION_TAG
-          git push origin $VERSION_TAG
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Crear el release usando la tag
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.tag_version.outputs.VERSION_TAG }}
-          body_path: "CHANGELOG.md"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Delete branch
         if: github.ref != 'refs/heads/main'
         run: |
