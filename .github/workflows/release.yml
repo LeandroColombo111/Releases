@@ -54,10 +54,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete branch
-        uses: peter-evans/delete-branch@v1
-        with:
-          branch: ${{ github.ref }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-        if: github.ref != 'refs/heads/main'
+      
 
