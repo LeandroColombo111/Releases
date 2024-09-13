@@ -34,7 +34,6 @@ jobs:
       - name: Create Tag
         id: tag_version
         run: |
-          VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"
           git tag $VERSION_TAG
           git push origin $VERSION_TAG
         env:
