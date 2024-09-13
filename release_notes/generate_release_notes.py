@@ -2,10 +2,9 @@ import git
 import re
 from datetime import datetime
 
-# Ruta al repositorio local (GitHub Actions manejará esto automáticamente)
 repo = git.Repo(".")
 
-# Definir las categorías que nos interesan
+
 categories = { 
     "breaking-changes": "Breaking changes", 
     "feat": "New features", 
@@ -14,22 +13,20 @@ categories = {
 
 }
 
-# Patrón para identificar el formato de commit [DS-###] - tipo: comentario
+
 commit_pattern = re.compile(r"\[DS-(\d+)\] - (feat|fix|chore): (.+)")
 
-# Obtener los PRs/commits mergeados recientes
 def get_merged_prs():
     """
     Devuelve una lista de commits que representan PRs mergeados, en formato [DS-###] - tipo: comentario.
     """
     merged_prs = []
-    for commit in repo.iter_commits('main', max_count=100):  # Ajustar max_count según necesidad
+    for commit in repo.iter_commits('main', max_count=100):  
         message = commit.message
         if "Merge pull request" in message or commit_pattern.match(message):
             merged_prs.append(commit)
     return merged_prs
 
-# Clasificar los commits según el tipo y el formato definido
 def categorize_commits(commits):
     categorized_commits = {cat: [] for cat in categories.keys()}
 
@@ -44,7 +41,6 @@ def categorize_commits(commits):
 
     return categorized_commits
 
-# Generar el changelog en un formato Markdown
 def generate_changelog(categorized_commits):
     today = datetime.today().strftime('%Y-%m-%d')
     changelog = f"# Release Notes - {today}\n\n"
@@ -61,7 +57,6 @@ def generate_changelog(categorized_commits):
 
     return changelog
 
-# Guardar el changelog en un archivo
 def save_changelog(changelog):
     with open("CHANGELOG.md", "w") as file:
         file.write(changelog)
