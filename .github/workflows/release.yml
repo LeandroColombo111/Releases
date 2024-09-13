@@ -60,7 +60,7 @@ jobs:
 
       # Borrar la rama después de mergear el CHANGELOG.md
       - name: Delete branch
-        uses: peter-evans/delete-branch@v1
+        uses: peter-evans/delete-branch@v1.5.0
         with:
           branch: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
