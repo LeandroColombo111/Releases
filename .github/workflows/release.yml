@@ -37,6 +37,15 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore(release): update changelog"
           git push origin main
+
+      - name: Create Tag
+        id: tag_version
+        run: |
+          VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"
+          git tag $VERSION_TAG
+          git push origin $VERSION_TAG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -44,4 +53,11 @@ jobs:
           body_path: "CHANGELOG.md"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete branch
+        uses: peter-evans/delete-branch@v1
+        with:
+          branch: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: github.ref != 'refs/heads/main'
 
