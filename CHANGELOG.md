@@ -1,29 +1,11 @@
-# Release Notes - 2024-09-13
-
-## Breaking changes
-_No breaking changes en esta release._
-
-## New features
-_No new features en esta release._
-
-## Bugfixes
-_No bugfixes en esta release._
-
-## *
-_No * en esta release._
+# 0.1.0 (2024-09-13)
 
 
-# Release Notes - 2024-09-13
+### Features
 
-## Breaking changes
-_No breaking changes en esta release._
+* add breacking changes to format ([6987f68](https://github.com/LeandroColombo111/Releases/commit/6987f685e69562c72b06d0923e6fb309e7626337))
+* erase the quotes on titles ([00e0ddc](https://github.com/LeandroColombo111/Releases/commit/00e0ddc92e9d2ae7108001c05b5b7261ecb03fe0))
+* release.yml to automate release using git actions and release drafter to format ([0c00d35](https://github.com/LeandroColombo111/Releases/commit/0c00d354fc58078e50e7a9ecaa7a99038adfe69b))
 
-## New features
-_No new features en esta release._
 
-## bugfixes
-_No bugfixes en esta release._
-
-## *
-_No * en esta release._
 
