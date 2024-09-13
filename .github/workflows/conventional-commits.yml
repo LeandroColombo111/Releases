@@ -16,4 +16,4 @@ jobs:
         run: npm install --global @commitlint/cli @commitlint/config-conventional
 
       - name: Lint commit messages
-        run: commitlint --from=$GITHUB_BASE_REF --to=$GITHUB_HEAD_REF
+        run: commitlint --from=$GITHUB_BASE_REF --to=$GITHUB_HEAD_REF --
