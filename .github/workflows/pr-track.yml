@@ -1,0 +1,54 @@
+# .github/workflows/pr-track.yml
+name: Track Merged PRs
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  track_pr:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get PR details
+        id: pr_details
+        run: |
+          echo "PR_TITLE=$(echo '${{ github.event.pull_request.title }}')" >> $GITHUB_ENV
+          echo "PR_AUTHOR=$(echo '${{ github.event.pull_request.user.login }}')" >> $GITHUB_ENV
+          echo "PR_NUMBER=$(echo '${{ github.event.pull_request.number }}')" >> $GITHUB_ENV
+
+      - name: Extract Category from PR Title
+        id: extract_category
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          # Extract the category (feat, fix, chore) using regex
+          if [[ "$PR_TITLE" =~ \[(DS-[0-9]+)\] - (feat|fix|chore) ]]; then
+            echo "PR_CATEGORY=${BASH_REMATCH[2]}" >> $GITHUB_ENV
+          else
+            echo "PR_CATEGORY=Other" >> $GITHUB_ENV
+          fi
+
+      - name: Store PR in Changelog File
+        run: |
+          PR_LINE="* PR #${{ env.PR_NUMBER }} - ${{ env.PR_TITLE }} by @${{ env.PR_AUTHOR }}"
+          CATEGORY="Other Changes"
+          if [ "${{ env.PR_CATEGORY }}" == "feat" ]; then
+            CATEGORY="New Features"
+          elif [ "${{ env.PR_CATEGORY }}" == "fix" ]; then
+            CATEGORY="Fixes"
+          elif [ "${{ env.PR_CATEGORY }}" == "chore" ]; then
+            CATEGORY="Updates"
+          fi
+          echo "$CATEGORY: $PR_LINE" >> CHANGELOG.md
+
+      - name: Commit changelog update
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "[Auto] Update CHANGELOG for PR #${{ env.PR_NUMBER }}"
+          git push origin main
