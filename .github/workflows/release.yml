@@ -23,6 +23,11 @@ jobs:
       - name: switch to new branch
         run: git checkout release-from-${{ github.sha }}
 
+        
+      # Set upstream branch
+      - name: Set upstream branch
+        run: git branch --set-upstream-to=origin/main release-from-${{ github.sha }}
+
       # create release info and push it upstream
       - name: conventional Changelog Action
         id: changelog
