@@ -19,7 +19,12 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
+      
+      - name: Get last tag
+        id: get_tag
+        run: |
+          git fetch --tags
+          echo "lastest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
 
       - name: create release 
         uses: actions/create-release@v1
@@ -27,6 +32,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.output.tag }}
+          tag_name: ${{ env.lastest_tag }}
+          release_name: ${{ env.lastest_tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
