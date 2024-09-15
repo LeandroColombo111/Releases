@@ -25,12 +25,13 @@ jobs:
         id: extract_category
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          # Extract the category (feat, fix, chore) using regex
-          if [[ "$PR_TITLE" =~ \[(DS-[0-9]+)\] - (feat|fix|chore) ]]; then
-            echo "PR_CATEGORY=${BASH_REMATCH[2]}" >> $GITHUB_ENV
+          # Usamos una expresión regular que funcione con tu formato
+          if [[ "$PR_TITLE" =~ \[[DS\-0-9]+\]\ \-\ (feat|fix|chore) ]]; then
+            echo "PR_CATEGORY=${BASH_REMATCH[1]}" >> $GITHUB_ENV
           else
             echo "PR_CATEGORY=Other" >> $GITHUB_ENV
           fi
+
 
       - name: Store PR in Changelog File
         run: |
