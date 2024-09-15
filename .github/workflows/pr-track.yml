@@ -25,15 +25,16 @@ jobs:
         id: extract_category
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          # Expresión regular para capturar la categoría del formato [DS-###] - feat/fix/chore/etc
-          if [[ "$PR_TITLE" =~ \[[DS\-0-9]+\]\ \-\ (feat|fix|chore) ]]; then
-            CATEGORY=${BASH_REMATCH[2]}  # Captura la categoría en el segundo grupo
+          # Ajustamos la expresión regular para capturar la categoría correctamente
+          if [[ "$PR_TITLE" =~ \[[DS\-0-9]+\]\ \-\ (feat|fix|chore): ]]; then
+            CATEGORY=${BASH_REMATCH[1]}  # Captura la categoría
             echo "PR_CATEGORY=$CATEGORY" >> $GITHUB_ENV
             echo "Categoria encontrada: $CATEGORY"
           else
             echo "PR_CATEGORY=other" >> $GITHUB_ENV
             echo "No se encontró categoría válida. Título del PR: $PR_TITLE"
           fi
+
 
       - name: Debug category output
         run: |
