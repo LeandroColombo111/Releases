@@ -7,3 +7,4 @@ Other Changes: * PR #37 - [DS-297] - fix : try to fix the regex by @LeandroColom
 Other Changes: * PR #38 - [DS-297] - fix : try to fix the regex by @LeandroColombo111
 Other Changes: * PR #39 - [DS-297] - fix : try to fix the regex by @LeandroColombo111
 Other Changes: * PR #40 - [DS-297] - fix : try to fix the regex by @LeandroColombo111
+Other Changes: * PR #41 - [DS-297] - fix : try to fix the regex by @LeandroColombo111
