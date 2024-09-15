@@ -22,4 +22,5 @@ jobs:
           skip-on-empty: false
 
       - name: Debug changelog outputs
-        run: echo "Changelog: ${{ steps.changelog.outputs.clean_changelog }}"
+        run: |
+          echo "Changelog: ${{ steps.changelog.outputs.clean_changelog }}"
