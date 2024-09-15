@@ -40,16 +40,11 @@ jobs:
           config-file-path: './conventional-changelog-config.js'
 
 
-      # create PR using GitHub CLI
-      - name: create PR with release info
-        if: steps.changelog.outputs.skipped == 'false'
-        id: create-pr
-        run: gh pr create --base main --head release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # create PR with release
-      - name: create PR with release info
-        run: gh pr create --base main --head release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
-        env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }} 
+      # Commit the updated CHANGELOG.md
+      - name: Commit Changelog
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CHANGELOG.md
+          git commit -m "chore(release): update changelog"
+          git push origin main
