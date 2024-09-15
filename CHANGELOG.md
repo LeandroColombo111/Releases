@@ -13,3 +13,4 @@
 
 
 
+Other Changes: * PR #26 - [DS-200] - feat: add better regex to PR title by @LeandroColombo111
