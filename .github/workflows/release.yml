@@ -11,22 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      # create release info and push it upstream
+          fetch-depth: 0  
+          
       - name: conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          preset: angular
+          skip-on-empty: false
 
+      - name: Debug changelog outputs
+        run: |
+          echo "Changelog: ${{ steps.changelog.outputs.clean_changelog }}"
 
-      - name: create release 
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.output.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+      - name: Show commits in range
+        run: git log --oneline --decorate

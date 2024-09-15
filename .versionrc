@@ -1,0 +1,7 @@
+module.exports = {
+  parserOpts: {
+    headerPattern: /^\[DS-(\d+)\] - (feat|fix|chore): (.*)$/,
+    headerCorrespondence: ['ticket', 'type', 'subject'],
+  },
+  preset: 'angular',
+};
