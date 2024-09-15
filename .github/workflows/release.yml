@@ -23,7 +23,7 @@ jobs:
       - name: switch to new branch
         run: git checkout release-from-${{ github.sha }}
 
-        
+
       # Set upstream branch
       - name: Set upstream branch
         run: git branch --set-upstream-to=origin/main release-from-${{ github.sha }}
@@ -48,20 +48,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # merge PR using GitHub CLI
+      # create PR with release
       - name: merge PR with release info
-        if: steps.changelog.outputs.skipped == 'false'
-        id: merge-pr
         run: gh pr merge --admin --merge --subject 'Merge release info' --delete-branch
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # release info is now in main so we can continue as before
-      - name: create release with last commit
-        if: steps.changelog.outputs.skipped == 'false'
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.CHANGELOG_RELEASE }}
-          tag: ${{ steps.changelog.outputs.tag }}
-          name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+
