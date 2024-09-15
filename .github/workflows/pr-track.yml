@@ -25,14 +25,15 @@ jobs:
         id: extract_category
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          if echo "$PR_TITLE" | grep -Eq "\[DS-[0-9]+\] - (feat|fix|chore):"; then
-            CATEGORY=$(echo "$PR_TITLE" | grep -oP "(?<=\[DS-[0-9]+\] - )(feat|fix|chore)(?=:)")
+          if echo "$PR_TITLE" | grep -Eq "\[DS-[0-9]+\] - (feat|fix|chore): "; then
+            CATEGORY=$(echo "$PR_TITLE" | grep -oE "(feat|fix|chore)")
             echo "PR_CATEGORY=$CATEGORY" >> $GITHUB_ENV
             echo "Categoria encontrada: $CATEGORY"
           else
             echo "PR_CATEGORY=other" >> $GITHUB_ENV
             echo "No se encontró categoría válida. Título del PR: $PR_TITLE"
           fi
+
 
 
       - name: Debug category output
