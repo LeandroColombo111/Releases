@@ -29,10 +29,11 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: "./package.json,./package-lock.json"
-          git-branch: "release-from-${{ github.sha }}"
-          skip-git-pull: |
-            true
+          preset: angular
+          release-count: 5
+          skip-on-empty: true
+          config-file: './conventional-changelog-config.js'
+
 
       # create PR using GitHub CLI
       - name: create PR with release info
