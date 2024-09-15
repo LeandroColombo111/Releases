@@ -36,7 +36,8 @@ jobs:
           fi
 
       - name: Debug category output
-        run: echo "La categoría extraída es: ${{ env.PR_CATEGORY }}"
+        run: |
+          echo "La categoría extraída es: ${{ env.PR_CATEGORY }}"
 
       - name: Store PR in Changelog File
         run: |
