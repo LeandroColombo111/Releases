@@ -15,20 +15,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Create a temporary, uniquely named branch to push release info to
-      - name: create temporary branch
-        run: git branch "release-from-${{ github.sha }}" "${{ github.sha }}"
 
-      # switch to the temporary branch
-      - name: switch to new branch
-        run: git checkout release-from-${{ github.sha }}
-
-
-      # Set upstream branch
-      - name: Set upstream branch
-        run: git branch --set-upstream-to=origin/main release-from-${{ github.sha }}
-
-      # create release info and push it upstream
+       # Generate Changelog
       - name: conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
@@ -37,14 +25,15 @@ jobs:
           preset: angular
           release-count: 5
           skip-on-empty: true
-          config-file-path: './conventional-changelog-config.js'
+          output-file: CHANGELOG.md
+          version-file: ./package.json
+          skip-git-pull: false
 
-
-      # Commit the updated CHANGELOG.md
+      # Commit the updated CHANGELOG.md (solo un commit)
       - name: Commit Changelog
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add CHANGELOG.md
           git commit -m "chore(release): update changelog"
-          git push origin main
+          git push origin main --follow-tags
