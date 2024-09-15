@@ -24,7 +24,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           preset: angular
           release-count: 5
-          skip-on-empty: true
           output-file: CHANGELOG.md
           version-file: ./package.json
           skip-git-pull: false
@@ -34,6 +33,10 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add CHANGELOG.md
-          git commit -m "chore(release): update changelog"
-          git push origin main --follow-tags
+          if [ -f CHANGELOG.md ]; then
+            git add CHANGELOG.md
+            git commit -m "chore(release): update changelog"
+            git push origin main --follow-tags
+          else
+            echo "No changes in CHANGELOG.md, skipping commit."
+          fi
