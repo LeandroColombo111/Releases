@@ -25,36 +25,27 @@ jobs:
         id: extract_category
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
-          # Usamos una expresión regular que funcione con tu formato [DS-###] - feat/fix/chore
+          # Expresión regular mejorada para capturar la categoría del formato [DS-###] - feat/fix/chore/etc
           if [[ "$PR_TITLE" =~ \[[DS\-0-9]+\]\ \-\ (feat|fix|chore) ]]; then
-            CATEGORY=${BASH_REMATCH[1]}
-            if [[ "$CATEGORY" == "feat" ]]; then
-              echo "PR_CATEGORY=New Features" >> $GITHUB_ENV
-            elif [[ "$CATEGORY" == "fix" ]]; then
-              echo "PR_CATEGORY=Fixes" >> $GITHUB_ENV
-            elif [[ "$CATEGORY" == "chore" ]]; then
-              echo "PR_CATEGORY=Updates" >> $GITHUB_ENV
-            else
-              echo "PR_CATEGORY=Other Changes" >> $GITHUB_ENV
-            fi
+            CATEGORY=${BASH_REMATCH[2]}  # Captura la categoría en el grupo correcto
+            echo "PR_CATEGORY=$CATEGORY" >> $GITHUB_ENV
           else
-            echo "PR_CATEGORY=Other Changes" >> $GITHUB_ENV
+            echo "PR_CATEGORY=other" >> $GITHUB_ENV
           fi
-
-
 
       - name: Store PR in Changelog File
         run: |
           PR_LINE="* PR #${{ env.PR_NUMBER }} - ${{ env.PR_TITLE }} by @${{ env.PR_AUTHOR }}"
-          CATEGORY="Other Changes"
+          
           if [ "${{ env.PR_CATEGORY }}" == "feat" ]; then
-            CATEGORY="New Features"
+            echo "New Features: $PR_LINE" >> CHANGELOG.md
           elif [ "${{ env.PR_CATEGORY }}" == "fix" ]; then
-            CATEGORY="Fixes"
+            echo "Fixes: $PR_LINE" >> CHANGELOG.md
           elif [ "${{ env.PR_CATEGORY }}" == "chore" ]; then
-            CATEGORY="Updates"
+            echo "Updates: $PR_LINE" >> CHANGELOG.md
+          else
+            echo "Other Changes: $PR_LINE" >> CHANGELOG.md
           fi
-          echo "$CATEGORY: $PR_LINE" >> CHANGELOG.md
 
       - name: Commit changelog update
         run: |
