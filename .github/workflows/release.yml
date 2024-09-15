@@ -49,7 +49,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # create PR with release
-      - name: merge PR with release info
-        run: gh pr merge --admin --merge --subject 'Merge release info' --delete-branch
+      - name: create PR with release info
+        run: gh pr create --base main --head release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
 
 
