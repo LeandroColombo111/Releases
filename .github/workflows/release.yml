@@ -32,7 +32,7 @@ jobs:
           preset: angular
           release-count: 5
           skip-on-empty: true
-          config-file: './conventional-changelog-config.js'
+          config-file-path: './conventional-changelog-config.js'
 
 
       # create PR using GitHub CLI
