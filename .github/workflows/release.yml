@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 100
 
 
       - name: conventional Changelog Action
@@ -19,5 +19,7 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      
+          skip-on-empty: false
 
+      - name: Debug changelog outputs
+        run: echo "Changelog: ${{ steps.changelog.outputs.clean_changelog }}"
