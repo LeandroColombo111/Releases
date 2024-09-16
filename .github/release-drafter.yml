@@ -1,5 +1,5 @@
-name-template: 'Release v$NEXT_PATCH_VERSION 🌟'
-tag-template: 'v$NEXT_PATCH_VERSION'
+name-template: 'Release $NEXT_PATCH_VERSION 🌟'
+tag-template: '$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Features'
     label: 'feat'
@@ -24,22 +24,31 @@ template: |
   ## Changes in this Release
 
   ### 🚀 Features
+  $CHANGES_FOR_CATEGORY_FEAT
 
   ### 🐛 Bug Fixes
+  $CHANGES_FOR_CATEGORY_FIX
 
   ### 🧹 Chores
+  $CHANGES_FOR_CATEGORY_CHORE
 
   ### 📝 Documentation
+  $CHANGES_FOR_CATEGORY_DOCS
 
   ### 🔧 Refactoring
+  $CHANGES_FOR_CATEGORY_REFACTOR
 
   ### 🔍 Tests
+  $CHANGES_FOR_CATEGORY_TEST
 
   ### 💄 Style
+  $CHANGES_FOR_CATEGORY_STYLE
 
   ### ⚡️ Performance
+  $CHANGES_FOR_CATEGORY_PERF
 
   ### 📦 CI/CD
+  $CHANGES_FOR_CATEGORY_CI
 
   **Contributors**:
-
+  $CONTRIBUTORS
