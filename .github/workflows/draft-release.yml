@@ -1,0 +1,37 @@
+name: Create Draft Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_draft_release:
+    name: Create Draft Release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up GitHub CLI
+      uses: actions/setup-gh-cli@v1
+
+    - name: Get the latest release
+      id: latest_release
+      run: |
+        gh release list --limit 1 | awk '{print $1}' > latest_release.txt
+        latest_release=$(cat latest_release.txt)
+        echo "::set-output name=latest_release::$latest_release"
+
+    - name: Get PRs merged since the latest release
+      id: prs_merged
+      run: |
+        PR_TITLES=$(gh pr list --search "is:merged base:main merged:>=$(gh release view ${{ steps.latest_release.outputs.latest_release }} --json publishedAt --jq '.publishedAt')" --json title --jq '.[].title')
+        echo "$PR_TITLES" > pr_titles.txt
+        echo "::set-output name=pr_titles::$PR_TITLES"
+
+    - name: Create draft release
+      run: |
+        gh release create --draft --title "Draft Release" --notes-file pr_titles.txt
