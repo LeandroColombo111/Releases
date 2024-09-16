@@ -1,15 +1,22 @@
 name-template: 'Release v$NEXT_PATCH_VERSION 🌟'
 tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
-  - title: '🚀 New Features'
-    label: 'feature'
+  - title: '🚀 Features'
+    label: 'feat'
   - title: '🐛 Bug Fixes'
-    label: 'bug'
-  - title: '🛠 Maintenance'
+    label: 'fix'
+  - title: '🧹 Chores'
     label: 'chore'
-change-template: '- $TITLE (#$NUMBER) @${{PR.author.login}}'
+  - title: '📝 Documentation'
+    label: 'docs'
+  - title: '🔧 Refactoring'
+    label: 'refactor'
+  - title: '🔍 Tests'
+    label: 'test'
+
+change-template: '- $TITLE (#$NUMBER) by @${{PR.author.login}}'
 template: |
-  ## Changes
+  ## Changes in this Release
   $CHANGES
 
   **Contributors**:
