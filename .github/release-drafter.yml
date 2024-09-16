@@ -1,5 +1,5 @@
-name-template: 'Release $NEXT_PATCH_VERSION 🌟'
-tag-template: '$NEXT_PATCH_VERSION'
+name-template: 'Release v$NEXT_PATCH_VERSION 🌟'
+tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Features'
     label: 'feat'
@@ -13,11 +13,33 @@ categories:
     label: 'refactor'
   - title: '🔍 Tests'
     label: 'test'
-
+  - title: '💄 Style'
+    label: 'style'
+  - title: '⚡️ Performance'
+    label: 'perf'
+  - title: '📦 CI/CD'
+    label: 'ci'
 change-template: '- $TITLE (#$NUMBER) by @${{PR.author.login}}'
 template: |
   ## Changes in this Release
-  $CHANGES
+
+  ### 🚀 Features
+
+  ### 🐛 Bug Fixes
+
+  ### 🧹 Chores
+
+  ### 📝 Documentation
+
+  ### 🔧 Refactoring
+
+  ### 🔍 Tests
+
+  ### 💄 Style
+
+  ### ⚡️ Performance
+
+  ### 📦 CI/CD
 
   **Contributors**:
-  $CONTRIBUTORS
+
