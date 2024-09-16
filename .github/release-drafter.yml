@@ -3,6 +3,7 @@ tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Features'
     label: 'feat'  
+  - title: '🐛 Bug Fixes'
     label: 'fix'   
   - title: '🧹 Chores'
     label: 'chore' 
