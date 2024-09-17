@@ -1,6 +1,6 @@
 name: 'Release'
 on:
-  workflow_dispatch: #manual execution
+  workflow_dispatch:  
 
 concurrency:
   group: ${{ github.event.pull_request.number }}-ci
@@ -8,13 +8,12 @@ concurrency:
 
 jobs:
   build-test:
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
+          fetch-depth: 0 
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,20 +26,19 @@ jobs:
           pip install -r requirements.txt
 
   changelog:
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Generate Changelog
-        id: generate_changelog  
+        id: generate_changelog
         uses: mikepenz/release-changelog-builder-action@v4
         with:
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
               "categories": [
-                { "title": "## New Features 🎉", "labels": ["feat"] },
-                { "title": "## Fixes 🐛", "labels": ["fix"] },
-                { "title": "## Other Updates 🔄", "labels": ["*"] }
+                { "title": "## 🚀 New Features", "labels": ["feat"] },
+                { "title": "## 🐛 Fixes", "labels": ["fix"] },
+                { "title": "## 🔄 Other Updates", "labels": ["*"] }
               ]
             }
         env:
@@ -54,11 +52,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get Latest Tag
+      - name: Get Latest Tag and Increment
         id: get_latest_tag
         run: |
+          # Obtén el último tag
           LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+          # Divide el tag en partes (suponiendo formato MAJOR.MINOR.PATCH)
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST_TAG#v}"
+
+          # Incrementa el PATCH
+          PATCH=$((PATCH + 1))
+
+          # Crea el nuevo tag
+          NEW_TAG="v$MAJOR.$MINOR.$PATCH"
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+          echo "NEW_TAG: $NEW_TAG"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create New Tag
+        id: create_tag
+        run: |
+          git tag ${{ env.NEW_TAG }}
+          git push origin ${{ env.NEW_TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -74,8 +91,8 @@ jobs:
       - name: Create Release
         uses: mikepenz/action-gh-release@v1
         with:
-          tag_name: ${{ env.LASTEST_TAG }}  
-          body: ${{ steps.build_changelog.outputs.changelog }} 
+          tag_name: ${{ env.NEW_TAG }}  
+          body: ${{ steps.build_changelog.outputs.changelog }}  
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
