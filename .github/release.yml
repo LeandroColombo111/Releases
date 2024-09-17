@@ -1,14 +1,23 @@
-name-template: 'Data Sourcing v$NEXT_PATCH_VERSION'
-tag-template: 'v$NEXT_PATCH_VERSION'
-categories:
-  - title: '🔧 Breaking Changes'
-    labels:
-      - breaking-change
-  - title: '🚀 New Features'
-    labels:
-      - new-feature
-  - title: '🐛 Bug Fixes'
-    labels:
-      - bug-fix
-change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
-no-changes-template: "No changes."
+title: "Data Sourcing - v2.0.2" 
+changelog:
+  categories:
+    - title: "🔧 Breaking Changes"
+      labels:
+        - breaking-change
+    - title: "🚀 New Features"
+      labels:
+        - new-feature
+    - title: "🐛 Bug Fixes"
+      labels:
+        - bug-fix
+template: |
+  ## Data Sourcing - v2.0.2
+
+  ### 🔧 Breaking Changes
+  - List of breaking changes here.
+
+  ### 🚀 New Features
+  - List of new features here.
+
+  ### 🐛 Bug Fixes
+  - List of bug fixes here.
