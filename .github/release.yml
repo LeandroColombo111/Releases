@@ -9,3 +9,6 @@ changelog:
     - title: 🐛 Bug Fixes
       labels:
         - bug-fix
+
+release:
+  name-template: "Data Sourcing"
