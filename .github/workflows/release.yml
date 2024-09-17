@@ -1,6 +1,7 @@
 name: 'Release'
 on:
-  workflow_dispatch:  
+  release:
+    types: [created]
 
 concurrency:
   group: ${{ github.event.pull_request.number }}-ci
@@ -34,11 +35,29 @@ jobs:
         with:
           configurationJson: |
             {
-              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
               "categories": [
-                { "title": "## 🚀 New Features", "labels": ["feat"] },
-                { "title": "## 🐛 Fixes", "labels": ["fix"] },
-                { "title": "## 🔄 Other Updates", "labels": ["*"] }
+                  {
+                      "title": "## 🚀 New Features",
+                      "pattern": "\\[DS-\\d+\\] - feat"  
+                  },
+                  {
+                      "title": "## 🐛 Fixes",
+                      "pattern": "\\[DS-\\d+\\] - fix"  
+                  },
+                  {
+                      "title": "## 🔄 Other Updates",
+                      "pattern": "\\[DS-\\d+\\] - (chore|refactor|docs|test|ci|style)"  
+                  }
+              ],
+              "sort": "ASC",
+              "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
+              "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}",
+              "empty_template": "- no changes",
+              "max_tags_to_fetch": 200,
+              "max_pull_requests": 200,
+              "max_back_track_time_days": 90,
+              "exclude_merge_branches": [
+                  "Owner/qa"
               ]
             }
         env:
