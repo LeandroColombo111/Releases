@@ -1,4 +1,4 @@
-name: 'Release'
+name: 'CI'
 on:
   push:
     tags:
@@ -19,20 +19,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
+      - name: Run tests
+        run: |
+          pytest
 
   changelog:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Generate Changelog
-        uses: LeandroColombo111/release-changelog-builder-action@develop
+        uses: mikepenz/release-changelog-builder-action@v4
         with:
           toTag: "v3.1.1"
           configurationJson: |
@@ -57,7 +60,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Changelog
-        uses: LeandroColombo111/release-changelog-builder-action@v4
+        uses: mikepenz/release-changelog-builder-action@v4
         with:
           configuration: "configs/configuration_repo.json"
           ignorePreReleases: ${{ !contains(github.ref, '-') }}
@@ -65,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
-        uses: LeandroColombo111/action-gh-release@v1
+        uses: mikepenz/action-gh-release@v1
         with:
           body: ${{ steps.github_release.outputs.changelog }}
           prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
