@@ -1,8 +1,11 @@
 changelog:
   categories:
-    - title: 🏕 Features
+    - title: 🔧 Breaking Changes
       labels:
-        - '*'
-    - title: 👒 Dependencies
+        - breaking-change
+    - title: 🚀 New Features
       labels:
-        - dependencies
+        - new-feature
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug-fix
