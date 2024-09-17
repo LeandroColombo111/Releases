@@ -62,7 +62,7 @@ jobs:
       - name: Create Tag
         id: create_tag
         run: |
-          VERSION_TAG="1.0.6" 
+          VERSION_TAG="1.0.7" 
           echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
           git tag $VERSION_TAG
           git push origin $VERSION_TAG
