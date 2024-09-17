@@ -1,11 +1,6 @@
 name: 'Release'
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch: #manual execution
 
 concurrency:
   group: ${{ github.event.pull_request.number }}-ci
@@ -59,13 +54,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create Tag
-        id: create_tag
+      - name: Get Latest Tag
+        id: get_latest_tag
         run: |
-          VERSION_TAG="1.0.8" 
-          echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
-          git tag $VERSION_TAG
-          git push origin $VERSION_TAG
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -81,8 +74,8 @@ jobs:
       - name: Create Release
         uses: mikepenz/action-gh-release@v1
         with:
-          tag_name: ${{ env.VERSION_TAG }}  
+          tag_name: ${{ env.LASTEST_TAG }}  
           body: ${{ steps.build_changelog.outputs.changelog }} 
-          prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
