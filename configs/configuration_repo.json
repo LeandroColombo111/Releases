@@ -12,13 +12,13 @@
         },
         {
             "title": "## 🔄 Other Updates",
-            "labels": ["*"], 
+            "labels": ["*"],  
             "pattern": "\\[DS-\\d+\\] - (chore|refactor|docs|test|style|ci)"  
         }
     ],
     "sort": "ASC",
     "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
-    "pr_template": "- ${{TITLE}}\n   - Type: ${{MATCH_LABEL}}\n   - PR: #${{NUMBER}}",
+    "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}", 
     "empty_template": "- no changes",
     "transformers": [
         {
