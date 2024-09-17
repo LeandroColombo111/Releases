@@ -1,16 +1,19 @@
 {
     "categories": [
         {
-            "title": "## 🚀 Features",
-            "labels": ["feature"]
+            "title": "## 🚀 New Features",
+            "labels": ["feat"],
+            "pattern": "\\[DS-[0-9]+\\] - feat" 
         },
         {
             "title": "## 🐛 Fixes",
-            "labels": ["fix"]
+            "labels": ["fix"],
+            "pattern": "\\[DS-[0-9]+\\] - fix" 
         },
         {
-            "title": "## 🧪 Tests",
-            "labels": ["test"]
+            "title": "## 🔄 Other Updates",
+            "labels": ["*"], 
+            "pattern": "\\[DS-[0-9]+\\] - chore|\\[DS-[0-9]+\\] - .*" 
         }
     ],
     "sort": "ASC",
