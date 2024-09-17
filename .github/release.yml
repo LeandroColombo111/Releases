@@ -1,4 +1,5 @@
-name-template: 'Data Sourcing'
+name-template: 'Data Sourcing v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: '🔧 Breaking Changes'
     labels:
