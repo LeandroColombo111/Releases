@@ -2,10 +2,10 @@ name: 'Release'
 on:
   push:
     branches:
-      - main  # Solo se ejecuta cuando hay un push a la rama main
+      - main
   pull_request:
     branches:
-      - main  # También se ejecuta cuando se abre un PR contra la rama main
+      - main
 
 concurrency:
   group: ${{ github.event.pull_request.number }}-ci
@@ -30,7 +30,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          
 
   changelog:
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
@@ -52,16 +51,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo "${{ steps.without_checkout.outputs.changelog }}"
-
-  release:
-    if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+  tag-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Asegura que obtienes todo el historial de commits y tags
+          fetch-depth: 0
+
+      - name: Create Tag
+        id: tag_creation
+        run: |
+          VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"
+          git tag $VERSION_TAG
+          git push origin $VERSION_TAG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Changelog
         uses: mikepenz/release-changelog-builder-action@v4
@@ -74,6 +79,7 @@ jobs:
       - name: Create Release
         uses: mikepenz/action-gh-release@v1
         with:
+          tag_name: ${{ steps.tag_creation.outputs.VERSION_TAG }}
           body: ${{ steps.github_release.outputs.changelog }}
           prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
         env:
