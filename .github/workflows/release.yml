@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0  
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -43,10 +43,9 @@ jobs:
             {
               "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
               "categories": [
-                { "title": "## 🚀 Features", "labels": ["feat"] },
-                { "title": "## 🐛 Fixes", "labels": ["fix"] },
-                { "title": "## 💬 Other", "labels": ["chore"] },
-                { "title": "## 📦 Dependencies", "labels": ["dependencies"] }
+                { "title": "## New Features 🎉", "labels": ["feat"] },
+                { "title": "## Fixes 🐛", "labels": ["fix"] },
+                { "title": "## Other Updates 🔄", "labels": ["*"] }
               ]
             }
         env:
@@ -63,7 +62,7 @@ jobs:
       - name: Create Tag
         id: create_tag
         run: |
-          VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"
+          VERSION_TAG="1.0.5"  # Usamos el tag estático 1.0.5
           echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
           git tag $VERSION_TAG
           git push origin $VERSION_TAG
@@ -82,8 +81,8 @@ jobs:
       - name: Create Release
         uses: mikepenz/action-gh-release@v1
         with:
-          tag_name: ${{ env.VERSION_TAG }} 
-          body: ${{ steps.build_changelog.outputs.changelog }}  
+          tag_name: ${{ env.VERSION_TAG }}  
+          body: ${{ steps.build_changelog.outputs.changelog }} 
           prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
