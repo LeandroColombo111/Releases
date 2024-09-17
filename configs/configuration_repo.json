@@ -2,15 +2,15 @@
     "categories": [
         {
             "title": "## 🚀 New Features",
-            "pattern": "\\[DS-\\d+\\] - feat"  
+            "pattern": "\\[DS-\\d+\\] - feat:"  
         },
         {
             "title": "## 🐛 Fixes",
-            "pattern": "\\[DS-\\d+\\] - fix"  
+            "pattern": "\\[DS-\\d+\\] - fix:"  
         },
         {
             "title": "## 🔄 Other Updates",
-            "pattern": "\\[DS-\\d+\\] - (chore|refactor|docs|test|ci|style)"  
+            "pattern": "\\[DS-\\d+\\] - (chore|refactor|docs|test|ci|style):"  
         }
     ],
     "sort": "ASC",
