@@ -1,9 +1,8 @@
 changelog:
-  - title: 123ReleaseNote
-    categories:
-      - title: 🏕 Features
-        labels:
-          - '*'
-      - title: 👒 Dependencies
-        labels:
-          - dependencies
+  categories:
+    - title: 🏕 Features
+      labels:
+        - '*'
+    - title: 👒 Dependencies
+      labels:
+        - dependencies
