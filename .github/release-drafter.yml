@@ -22,16 +22,12 @@ categories:
 
 change-template: '- $TITLE (#$NUMBER) by @${{PR.author.login}}'
 template: |
-  ## Changes in this Release
+  ## What's Changed
+
+  ## Updates
 
   ### 🚀 Features
   $CHANGES_FOR_CATEGORY_FEAT
-
-  ### 🐛 Bug Fixes
-  $CHANGES_FOR_CATEGORY_FIX
-
-  ### 🧹 Chores
-  $CHANGES_FOR_CATEGORY_CHORE
 
   ### 📝 Documentation
   $CHANGES_FOR_CATEGORY_DOCS
@@ -50,6 +46,16 @@ template: |
 
   ### 📦 CI/CD
   $CHANGES_FOR_CATEGORY_CI
+
+  ### 🧹 Chores
+  $CHANGES_FOR_CATEGORY_CHORE
+
+  ## Fixes
+
+  ### 🐛 Bug Fixes
+  $CHANGES_FOR_CATEGORY_FIX
+
+
 
   **Contributors**:
   $CONTRIBUTORS
