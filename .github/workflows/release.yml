@@ -60,9 +60,10 @@ jobs:
           fetch-depth: 0
 
       - name: Create Tag
-        id: tag_creation
+        id: create_tag
         run: |
           VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"
+          echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
           git tag $VERSION_TAG
           git push origin $VERSION_TAG
         env:
@@ -79,7 +80,7 @@ jobs:
       - name: Create Release
         uses: mikepenz/action-gh-release@v1
         with:
-          tag_name: ${{ steps.tag_creation.outputs.VERSION_TAG }}
+          tag_name: ${{ env.VERSION_TAG }}  # Usamos el tag recién creado
           body: ${{ steps.github_release.outputs.changelog }}
           prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
         env:
