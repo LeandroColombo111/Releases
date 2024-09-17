@@ -1,14 +1,13 @@
-changelog:
-  categories:
-    - title: 🔧 Breaking Changes
-      labels:
-        - breaking-change
-    - title: 🚀 New Features
-      labels:
-        - new-feature
-    - title: 🐛 Bug Fixes
-      labels:
-        - bug-fix
-
-release:
-  name-template: "Data Sourcing"
+name-template: 'Data Sourcing'
+categories:
+  - title: '🔧 Breaking Changes'
+    labels:
+      - breaking-change
+  - title: '🚀 New Features'
+    labels:
+      - new-feature
+  - title: '🐛 Bug Fixes'
+    labels:
+      - bug-fix
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+no-changes-template: "No changes."
