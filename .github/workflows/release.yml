@@ -1,9 +1,11 @@
 name: 'Release'
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main  # Solo se ejecuta cuando hay un push a la rama main
   pull_request:
+    branches:
+      - main  # También se ejecuta cuando se abre un PR contra la rama main
 
 concurrency:
   group: ${{ github.event.pull_request.number }}-ci
@@ -11,10 +13,13 @@ concurrency:
 
 jobs:
   build-test:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Asegura que obtienes todo el historial de commits y tags
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,15 +33,12 @@ jobs:
           
 
   changelog:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Generate Changelog
         uses: mikepenz/release-changelog-builder-action@v4
         with:
-          # Aquí usamos github.ref_name para obtener el último tag
-          toTag: "${{ github.ref_name }}"  # Refers to the latest tag
-          fromTag: "$(git describe --tags $(git rev-list --tags --max-count=1))"  # Previous tag
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
@@ -53,10 +55,13 @@ jobs:
       - run: echo "${{ steps.without_checkout.outputs.changelog }}"
 
   release:
-    if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Asegura que obtienes todo el historial de commits y tags
 
       - name: Build Changelog
         uses: mikepenz/release-changelog-builder-action@v4
