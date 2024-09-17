@@ -3,27 +3,27 @@
         {
             "title": "## 🚀 New Features",
             "labels": ["feat"],
-            "pattern": "\\[DS-[0-9]+\\] - feat" 
+            "pattern": "\\[DS-\\d+\\] - feat"  
         },
         {
             "title": "## 🐛 Fixes",
             "labels": ["fix"],
-            "pattern": "\\[DS-[0-9]+\\] - fix" 
+            "pattern": "\\[DS-\\d+\\] - fix"
         },
         {
             "title": "## 🔄 Other Updates",
             "labels": ["*"], 
-            "pattern": "\\[DS-[0-9]+\\] - chore|\\[DS-[0-9]+\\] - .*" 
+            "pattern": "\\[DS-\\d+\\] - (chore|refactor|docs|test|style|ci)" 
         }
     ],
-    "sort": "ASC",
+    "sort": "ASC",  
     "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
-    "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}",
+    "pr_template": "- ${{TITLE}}\n   - PR: #${{NUMBER}}",  
     "empty_template": "- no changes",
     "transformers": [
         {
-            "pattern": "[\\-\\*] (\\[(...|TEST|CI|SKIP)\\])( )?(.+?)\n(.+?[\\-\\*] )(.+)",
-            "target": "- $4\n  - $6"
+            "pattern": "\\[DS-\\d+\\] - (feat|fix|chore|refactor|docs|test|style|ci): (.+)",
+            "target": "- $2\n  - Type: $1"
         }
     ],
     "max_tags_to_fetch": 200,
