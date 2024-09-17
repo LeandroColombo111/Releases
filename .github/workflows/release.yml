@@ -1,4 +1,4 @@
-name: 'CI'
+name: 'Release'
 on:
   push:
     tags:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
@@ -34,7 +34,9 @@ jobs:
       - name: Generate Changelog
         uses: mikepenz/release-changelog-builder-action@v4
         with:
-          toTag: "v3.1.1"
+          # Aquí usamos github.ref_name para obtener el último tag
+          toTag: "${{ github.ref_name }}"  # Refers to the latest tag
+          fromTag: "$(git describe --tags $(git rev-list --tags --max-count=1))"  # Previous tag
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
