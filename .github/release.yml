@@ -1,0 +1,21 @@
+changelog:
+  title: "What's Changed"
+  categories:
+    - title: '🚀 Features'
+      label: 'feat'  
+    - title: '🐛 Bug Fixes'
+      label: 'fix'   
+    - title: '🧹 Chores'
+      label: 'chore' 
+    - title: '📝 Documentation'
+      label: 'documentation' 
+    - title: '🔧 Refactoring'
+      label: 'refactor' 
+    - title: '🔍 Tests'
+      label: 'test'  
+    - title: '💄 Style'
+      label: 'style'  
+    - title: '⚡️ Performance'
+      label: 'performance' 
+    - title: '📦 CI/CD'
+      label: 'ci'  
