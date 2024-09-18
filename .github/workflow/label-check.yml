@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Check if PR has a label
       id: label-check
       run: |
@@ -24,4 +27,3 @@ jobs:
       run: |
         echo "Pull Request cannot be merged without a label."
         exit 1
-
