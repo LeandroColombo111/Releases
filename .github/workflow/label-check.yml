@@ -1,0 +1,24 @@
+name: PR Label Check
+
+on:
+  pull_request:
+    types: [opened, edited, labeled, unlabeled]
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if PR has a label
+      id: label-check
+      run: |
+        if [ "$(jq -r '.pull_request.labels | length' $GITHUB_EVENT_PATH)" -eq 0 ]; then
+          echo "No labels found on the Pull Request"
+          exit 1
+        fi
+
+    - name: Fail if no label present
+      if: steps.label-check.outputs.has-label == 'false'
+      run: |
+        echo "Pull Request cannot be merged without a label."
+        exit 1

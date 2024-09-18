@@ -7,20 +7,6 @@ repos:
         language: system
         stages: [commit-msg]
 
-      - id: pre-isort-notification
-        name: Notify before running isort
-        entry: bash -c 'echo "Running isort to sort imports..."'
-        language: system
-        always_run: true
-        stages: [commit]
-
-      - id: pre-black-notification
-        name: Notify before running black
-        entry: bash -c 'echo "Running black to format code..."'
-        language: system
-        always_run: true
-        stages: [commit]
-
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1  
     hooks:
