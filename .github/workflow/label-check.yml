@@ -12,13 +12,16 @@ jobs:
     - name: Check if PR has a label
       id: label-check
       run: |
-        if [ "$(jq -r '.pull_request.labels | length' $GITHUB_EVENT_PATH)" -eq 0 ]; then
-          echo "No labels found on the Pull Request"
-          exit 1
+        LABEL_COUNT=$(jq -r '.pull_request.labels | length' $GITHUB_EVENT_PATH)
+        if [ "$LABEL_COUNT" -eq 0 ]; then
+          echo "has-label=false" >> $GITHUB_ENV
+        else
+          echo "has-label=true" >> $GITHUB_ENV
         fi
 
     - name: Fail if no label present
-      if: steps.label-check.outputs.has-label == 'false'
+      if: env.has-label == 'false'
       run: |
         echo "Pull Request cannot be merged without a label."
         exit 1
+
