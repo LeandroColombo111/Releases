@@ -5,11 +5,9 @@ changelog:
   - title: '🚀 New Features'
     labels:
       - new-feature
-      - feat
   - title: '🐛 Bug Fixes'
     labels:
       - bug-fix
-      - fix
   - title: '📝 Documentation'
     labels:
       - documentation
