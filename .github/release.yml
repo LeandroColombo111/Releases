@@ -1,4 +1,5 @@
 changelog:
+<<<<<<< HEAD
   - title: '🔧 Breaking Changes'
     labels:
       - breaking-change
@@ -8,3 +9,15 @@ changelog:
   - title: '🐛 Bug Fixes'
     labels:
       - bug-fix
+=======
+  categories:
+    - title: "🔧 Breaking Changes"
+      labels:
+        - breaking-change
+    - title: "🚀 New Features"
+      labels:
+        - new-feature
+    - title: "🐛 Bug Fixes"
+      labels:
+        - bug-fix
+>>>>>>> cde85af0cb9f41e217537ada685da7a893764fed

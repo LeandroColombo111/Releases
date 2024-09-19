@@ -1,0 +1,28 @@
+name: PR Label Check
+
+on:
+  [pull_request]
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check if PR has a label
+      id: label-check
+      run: |
+        LABEL_COUNT=$(jq -r '.pull_request.labels | length' $GITHUB_EVENT_PATH)
+        if [ "$LABEL_COUNT" -eq 0 ]; then
+          echo "has-label=false" >> $GITHUB_ENV
+        else
+          echo "has-label=true" >> $GITHUB_ENV
+        fi
+
+    - name: Fail if no label present
+      if: env.has-label == 'false'
+      run: |
+        echo "Pull Request cannot be merged without a label."
+        exit 1
