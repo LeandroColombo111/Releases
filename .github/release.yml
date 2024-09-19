@@ -1,23 +1,43 @@
 changelog:
-<<<<<<< HEAD
   - title: '🔧 Breaking Changes'
     labels:
       - breaking-change
   - title: '🚀 New Features'
     labels:
       - new-feature
+      - feat
   - title: '🐛 Bug Fixes'
     labels:
       - bug-fix
-=======
-  categories:
-    - title: "🔧 Breaking Changes"
-      labels:
-        - breaking-change
-    - title: "🚀 New Features"
-      labels:
-        - new-feature
-    - title: "🐛 Bug Fixes"
-      labels:
-        - bug-fix
->>>>>>> cde85af0cb9f41e217537ada685da7a893764fed
+      - fix
+  - title: '📝 Documentation'
+    labels:
+      - documentation
+      - docs
+  - title: '🛠 Code Refactoring'
+    labels:
+      - refactor
+  - title: '🎨 Styling'
+    labels:
+      - style
+  - title: '🔍 Tests'
+    labels:
+      - test
+  - title: '🏗 Build'
+    labels:
+      - build
+  - title: '⚙️ Chore'
+    labels:
+      - chore
+  - title: '⏪ Reverts'
+    labels:
+      - revert
+  - title: '⏩ Performance Improvements'
+    labels:
+      - perf
+  - title: '🔄 Continuous Integration'
+    labels:
+      - ci
+  - title: '💚 Maintenance'
+    labels:
+      - maintenance
