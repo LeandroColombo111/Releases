@@ -2,9 +2,7 @@ name: PR Label Check
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-  pull_request_target:
-    types: [labeled]
+    types: [opened, synchronize, reopened, labeled]
 
 jobs:
   check-label:
