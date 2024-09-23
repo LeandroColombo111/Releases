@@ -1,8 +1,7 @@
 name: PR Label Check
 
-on:
-  pull_request:
-    types: [opened, edited, labeled, unlabeled]
+on: [pull_request]
+    
 
 jobs:
   check-label:
