@@ -1,0 +1,16 @@
+name: Check PR Description
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  check_description:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if PR has a description
+        if: github.event.pull_request.body == '' || github.event.pull_request.body == null
+        run: |
+          echo "Error: Pull Request must have a description."
+          exit 1
